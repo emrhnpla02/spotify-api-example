@@ -1,0 +1,50 @@
+---
+// organize-imports-ignore
+import Navbar from "@/components/Navbar";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta content="width=device-width, height=device-height" name="viewport" />
+    <title>spotify api example</title>
+  </head>
+  <body>
+    <Navbar client:load />
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --app-height: 100%;
+  }
+
+  html,
+  body,
+  main {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    height: -webkit-fill-available;
+    width: 100vw;
+    overflow-x: hidden;
+
+    @media not all and (hover: hover) {
+      height: var(--app-height);
+    }
+  }
+</style>
+
+<script>
+  function handleResize() {
+    document.documentElement.style.setProperty(
+      "--app-height",
+      `${window.innerHeight}px`
+    );
+  }
+  window.addEventListener("resize", handleResize);
+  handleResize();
+</script>
