@@ -5,7 +5,7 @@ export default function UserProfile() {
   const user = useSpotifyUser();
 
   return (
-    <div class="relative flex h-[54rem] w-4/12 flex-col items-center space-y-10 border-2 bg-ctp-mantle text-ctp-text border-gradient-b-red-lavender-peach">
+    <div class="sticky top-0 flex h-[54rem] w-4/12 flex-col items-center space-y-10 border-2 bg-ctp-mantle text-ctp-text border-gradient-b-red-lavender-peach">
       <p class="absolute right-3 top-3 place-self-end text-sm text-ctp-text opacity-80">
         {user()?.id}
       </p>
@@ -44,7 +44,7 @@ export default function UserProfile() {
                       height={20}
                       class="inline rounded-full"
                     />
-                    <span>{artist.name}</span>
+                    <span class="text-start">{artist.name}</span>
                   </a>
                 </li>
               )}
@@ -71,7 +71,7 @@ export default function UserProfile() {
                       height={20}
                       class="inline rounded-full"
                     />
-                    <span>{track.name}</span>
+                    <span class="text-start">{track.name}</span>
                   </a>
                 </li>
               )}
