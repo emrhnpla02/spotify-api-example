@@ -1,33 +1,39 @@
 {
   "name": "spotify-api-example",
-  "type": "module",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "solid-start dev",
+    "build": "solid-start build",
+    "start": "solid-start start"
   },
   "dependencies": {
-    "@astrojs/solid-js": "^2.2.0",
-    "@astrojs/tailwind": "^3.1.3",
+    "@solidjs/meta": "^0.28.5",
+    "@solidjs/router": "^0.8.2",
     "@spotify/web-api-ts-sdk": "^0.0.20",
-    "astro": "^2.5.6",
     "solid-js": "^1.7.6",
-    "tailwindcss": "^3.3.2"
+    "solid-start": "^0.2.26",
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "@catppuccin/tailwindcss": "^0.1.1",
     "@iconify-icon/solid": "^1.0.7",
     "@typescript-eslint/parser": "^5.59.8",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.41.0",
-    "eslint-plugin-astro": "^0.27.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-solid": "^0.12.1",
+    "postcss": "^8.4.24",
     "prettier": "^2.8.8",
-    "prettier-plugin-astro": "^0.9.1",
     "prettier-plugin-organize-imports": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss-border-gradients": "^2.0.3"
+    "solid-start-node": "^0.2.26",
+    "tailwindcss": "^3.3.2",
+    "tailwindcss-border-gradients": "^2.0.3",
+    "typescript": "^4.9.5",
+    "vite": "^4.3.9"
+  },
+  "engines": {
+    "node": ">=16"
   }
 }

@@ -1,4 +1,5 @@
 import type {
+  Artist,
   Page,
   PlaylistWithTrackReferences,
   TrackWithAlbum,
@@ -6,8 +7,10 @@ import type {
 } from "@spotify/web-api-ts-sdk/dist/mjs/types";
 
 export type SpotifyUser = User & {
-  playlists: Page<PlaylistWithTrackReferences>;
+  playlists: Playlists;
   following: Page<Artist>;
   topArtists: Page<Artist>;
   topTracks: Page<TrackWithAlbum>;
 };
+
+export type Playlists = Page<PlaylistWithTrackReferences>;

@@ -1,40 +1,33 @@
 import type { SpotifyUser } from "@/types/spotify";
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
-import { createSignal } from "solid-js";
+import { createResource, type Resource } from "solid-js";
 
 export const spotify = SpotifyApi.withUserAuthorization(
-  import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
-  import.meta.env.PUBLIC_REDIRECT_TARGET,
+  import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+  import.meta.env.VITE_REDIRECT_TARGET,
   ["user-follow-read", "user-top-read", "playlist-read-private"]
 );
 
-export function useSpotifyUser() {
-  const [user, setUser] = createSignal<SpotifyUser>();
+export function useSpotifyUser(): Resource<SpotifyUser> {
+  const [user] = createResource(async () => {
+    const [profile, playlists, followedArtists, topArtists, topTracks] =
+      await Promise.all([
+        spotify.currentUser.profile(),
+        spotify.currentUser.playlists.playlists(),
+        spotify.currentUser.followedArtists(),
+        spotify.currentUser.topItems("artists"),
+        spotify.currentUser.topItems("tracks"), // INFO: RETURNS WRONG TYPE
+      ]);
 
-  async function fetchUser() {
-    return await Promise.all([
-      spotify.currentUser.profile(),
-      spotify.currentUser.playlists.playlists(),
-      spotify.currentUser.followedArtists(),
-      spotify.currentUser.topItems("artists"),
-      spotify.currentUser.topItems("tracks"),
-    ]);
-  }
+    return {
+      ...profile,
+      playlists,
+      following: followedArtists.artists,
+      topArtists,
+      topTracks,
+    };
+  });
 
-  fetchUser()
-    .then((res) => {
-      const [profile, playlists, followedArtists, topArtists, topTracks] = res;
-      // @ts-ignore
-      setUser({
-        ...profile,
-        playlists,
-        following: followedArtists.artists,
-        topArtists,
-        // @ts-ignore
-        topTracks,
-      } satisfies SpotifyUser);
-    })
-    .catch((err) => console.error(err));
-
+  // @ts-ignore
   return user;
 }

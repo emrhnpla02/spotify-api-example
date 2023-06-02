@@ -1,15 +1,11 @@
-import emptyPlaylistImage from "@/assets/img/empty-playlist.png";
 import { spotify } from "@/lib/spotify";
+import type { Playlists } from "@/types/spotify";
 import { Icon } from "@iconify-icon/solid";
-import type {
-  Page,
-  PlaylistWithTrackReferences,
-} from "@spotify/web-api-ts-sdk/dist/mjs/types";
-import { For, createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, For } from "solid-js";
+import { A } from "solid-start";
 
 export default function UserPlaylists() {
-  const [playlists, setPlaylists] =
-    createSignal<Page<PlaylistWithTrackReferences>>();
+  const [playlists, setPlaylists] = createSignal<Playlists>();
 
   createEffect(async () => {
     setPlaylists(await spotify.currentUser.playlists.playlists());
@@ -23,12 +19,12 @@ export default function UserPlaylists() {
           {(playlist, idx) => (
             <div class="group w-44 cursor-pointer">
               <div class="relative w-full">
-                <a href={`/playlist/${idx()}`}>
+                <A href={`/playlist/${idx()}`}>
                   <img
-                    src={playlist.images[0]?.url ?? emptyPlaylistImage}
+                    src={playlist.images[0]?.url ?? "/empty-playlist.png"}
                     class="h-44 w-full rounded-t-xl"
                   />
-                </a>
+                </A>
                 <a
                   href={playlist.external_urls.spotify}
                   target="_blank"
