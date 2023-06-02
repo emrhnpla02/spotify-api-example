@@ -1,33 +1,11 @@
-import { spotify } from "@/lib/spotify";
-import type { SpotifyUser } from "@/types/spotify";
-import { For, createEffect, createSignal } from "solid-js";
+import { useSpotifyUser } from "@/lib/spotify";
+import { For } from "solid-js";
 
 export default function UserProfile() {
-  const [user, setUser] = createSignal<SpotifyUser>();
-
-  createEffect(async () => {
-    const [profile, playlists, followedArtists, topArtists, topTracks] =
-      await Promise.all([
-        spotify.currentUser.profile(),
-        spotify.currentUser.playlists.playlists(),
-        spotify.currentUser.followedArtists(),
-        spotify.currentUser.topItems("artists"),
-        spotify.currentUser.topItems("tracks"),
-      ]);
-
-    // @ts-ignore
-    setUser({
-      ...profile,
-      playlists,
-      following: followedArtists.artists,
-      topArtists,
-      // @ts-ignore
-      topTracks,
-    } satisfies SpotifyUser);
-  });
+  const user = useSpotifyUser();
 
   return (
-    <div class="relative flex h-[54rem] w-2/6 flex-col items-center space-y-10 border-2 bg-ctp-mantle text-ctp-text border-gradient-b-red-lavender-peach">
+    <div class="relative flex h-[54rem] w-4/12 flex-col items-center space-y-10 border-2 bg-ctp-mantle text-ctp-text border-gradient-b-red-lavender-peach">
       <p class="absolute right-3 top-3 place-self-end text-sm text-ctp-text opacity-80">
         {user()?.id}
       </p>
